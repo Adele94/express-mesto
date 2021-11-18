@@ -1,0 +1,37 @@
+.authorize__input{
+    border: hidden;
+    border-bottom: 2px solid #CCCCCC;
+    box-sizing: border-box;
+    background-image:none;
+    font-family: Inter,Helvetica Neue,Arial,sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 17px;
+    margin: 0 auto;
+    min-width: 358px;
+    padding: 0 0 10px;
+    cursor: pointer;
+    background-color: black;
+    -webkit-box-shadow: inset 0 0 0 50px #000; 
+    -webkit-text-fill-color: #fff; 
+    padding: 0 0 10px;
+}
+
+.authorize__input:last-of-type {
+  margin-top: 30px;
+}
+
+input::-webkit-input-placeholder  { 
+  background: #CCCCCC;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Change the black to any color */
+.authorize__input::-webkit-autofill,
+.authorize__input::-webkit-autofill:hover, 
+.authorize__input::-webkit-autofill:focus, 
+.authorize__input::-webkit-autofill:active{
+-webkit-box-shadow: 0 0 0 30px black inset !important;
+}

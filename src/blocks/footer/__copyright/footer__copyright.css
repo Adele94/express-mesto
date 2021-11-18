@@ -1,0 +1,31 @@
+.footer__copyright {
+  margin: 0 auto;
+  max-width: 880px;
+  padding-bottom: 60px;
+  font-family: Inter, 'Helvetica Neue', Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 22px;
+  color: #545454;
+}
+
+@media screen and (max-width: 879px) {
+  .footer__copyright {
+    max-width: calc(((100% - 581px)/4) * 2 + 17px + 564px);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .footer__copyright   {
+    font-size: 14px;
+    line-height: 17px;
+    padding-bottom: 36px;
+  }
+}
+
+@media screen and (max-width: 580px) {
+  .footer__copyright {
+    margin-left: 19px;
+  }
+}

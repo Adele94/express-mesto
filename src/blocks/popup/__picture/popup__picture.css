@@ -1,0 +1,7 @@
+.popup__picture {
+  max-width: 75vw;
+  min-height: 75vh;
+  position: relative;
+  display: flex;
+  flex-direction: column;  
+}

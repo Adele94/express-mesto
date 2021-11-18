@@ -1,0 +1,8 @@
+.element__image {
+  min-width: 282px;
+  min-height: 282px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 10px 10px 0px 0px;
+  border-color: black;
+}

@@ -1,0 +1,25 @@
+.authorize__submit{
+  width: 358px;
+  height: 50px;
+  left: 461px;
+  margin-top: 216px;
+  background: #FFFFFF;
+  border-radius: 2px;
+}
+
+.authorize__submit:hover {
+  opacity: 0.6;
+  cursor: pointer;
+}
+
+
+@media screen and (max-width: 768px) {
+  .authorize__submit  {
+    min-width: 238px;
+    max-height: 46px;
+    margin-top: 45px;
+    padding-bottom: 14px;
+    font-size: 14px;
+    line-height: 17px;
+  }
+}
