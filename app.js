@@ -9,7 +9,7 @@ const routesCard = require('./routes/cards.js')
 mongoose.connect('mongodb://localhost:27017/mestodb', {
   useNewUrlParser: true
 }).then(() => console.log("Connection Successful"))
-  .catch(err => console.log(err));;
+  .catch(err => console.log(err));
 
 const app = express();
 app.use((req, res, next) => {

@@ -1,5 +1,6 @@
 const users = require('../routes/users');
 const User = require('../models/user')
+const ValidationError = require('../error');
 
 const getUsers = (req, res) => {
   return User.find({})
@@ -25,6 +26,7 @@ const createUser = (req, res) => {
 
 const getUserById = (req, res) => {
   User.findById(req.params.userId)
+    .orFail(new ValidationError("Произошла ошибка валидации"))
     .then(user => {
       if (user) {
         return res.status(200).send({ data: user })
@@ -34,6 +36,9 @@ const getUserById = (req, res) => {
       }
     })
     .catch(err => {
+      if (err.name === "CastError") {
+        return res.status(400).send({ message: "Переданы некорректные данные для возврата пользователя" })
+      }
       return res.status(500).send({ message: err.message })
     });
 }
@@ -48,7 +53,7 @@ const updateUser = (req, res) => {
       new: true, // обработчик then получит на вход обновлённую запись
       runValidators: true, // данные будут валидированы перед изменением
     }
-  )
+  ).orFail(new ValidationError("Произошла ошибка валидации"))
     .then(user => {
       if (user) {
         return res.status(200).send({ data: user })
@@ -58,7 +63,7 @@ const updateUser = (req, res) => {
       }
     })
     .catch(err => {
-      if (err.name === "ValidationError") {
+      if (err.name === "CastError") {
         return res.status(400).send({ message: "Переданы некорректные данные при обновлении пользователя" })
       }
       return res.status(500).send({ message: err.message })
@@ -76,7 +81,7 @@ const updateUserAvatar = (req, res) => {
       new: true, // обработчик then получит на вход обновлённую запись
       runValidators: true, // данные будут валидированы перед изменением
     }
-  )
+  ).orFail(new ValidationError("Произошла ошибка валидации"))
     .then(user => {
       if (user) {
         return res.status(200).send({ data: user })
@@ -86,7 +91,7 @@ const updateUserAvatar = (req, res) => {
       }
     })
     .catch(err => {
-      if (err.name === "ValidationError") {
+      if (err.name === "CastError") {
         return res.status(400).send({ message: "Переданы некорректные данные при обновлении аватара" })
       }
       return res.status(500).send({ message: err.message })
