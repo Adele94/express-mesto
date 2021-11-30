@@ -26,9 +26,6 @@ const getProfile = (req, res, next) => {
 
 //Регистрация пользователя
 const createUser = (req, res, next) => {
-
-  console.log("req.body")
-  console.log(req.body)
   if (!req.body.email || !req.body.password) {
     throw new BadRequestError('Отсутствует электронная почта или пароль');
   }
@@ -46,13 +43,13 @@ const createUser = (req, res, next) => {
     })
     // данные не записались, вернём ошибку
     .catch(err => {
-      if (err.name === "MongoError" && err.code === 11000) {
+      if (err.name === "MongoServerError" && err.code === 11000) {
         err = new ConflictError("Пользователем с таким email уже существует")
       }
       if (err.name === "ValidationError") {
         err = new BadRequestError("Переданы некорректные данные при создании пользователя")
       }
-      next(err)
+     next(err)
     });
 }
 
@@ -121,8 +118,6 @@ const updateUserAvatar = (req, res, next) => {
 };
 
 const findUserByCredentials = function (email, password) {
-  console.log("email, password")
-  console.log(email, password)
   return User.findOne({ email }).select('+password')
     .then((user) => {
       if (!user) {
@@ -157,8 +152,6 @@ const login = (req, res, next) => {
       })
         .end(); // если у ответа нет тела, можно использовать метод end 
 
-      //вернём токен
-      res.send({ token });
     })
     .catch(next)
 };

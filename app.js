@@ -6,7 +6,7 @@ const routesCard = require('./routes/cards.js')
 const routesAuth = require('./routes/auth.js')
 const auth = require('./middlewares/auth');
 const app = express();
-
+const { NotFoundError } = require('./error');
 
 // подключаемся к серверу mongo
 mongoose.connect('mongodb://localhost:27017/mestodb', {
@@ -19,13 +19,13 @@ app.use(express.json());
 app.use(routesAuth);
 app.use(auth, routesUser);
 app.use(auth, routesCard);
+app.use('*', () => { throw new NotFoundError('Ресурс не найден') });
 
 const { PORT = 3000 } = process.env;
 
 
 // здесь централизованно обрабатываем все ошибки
 app.use((err, req, res, next) => {
-  console.log(err)
   // если у ошибки нет статуса, выставляем 500
   const { statusCode = 500, message } = err;
 

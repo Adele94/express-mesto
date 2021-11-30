@@ -28,16 +28,15 @@ const createCard = (req, res, next) => {
 };
 
 const deleteCard = (req, res, next) => {
-  Card.findByIdAndRemove(req.params.cardId)
+  console.log()
+  Card.findById(req.params.cardId)
     .orFail(new NotFoundError("Карточка с указанным _id не найдена."))
     .then(card => {
-      if (card) {
-        if (!card.owner.equals(req.user._id)) {
-          return next(new ForbiddenError('Удаление чужой карточки запрещено'));
-        }
-
-        return res.status(200).send({ data: card })
+      if (!card.owner.equals(req.user._id)) {
+        return next(new ForbiddenError('Удаление чужой карточки запрещено'));
       }
+      card.remove(req.params.cardId)
+      return res.status(200).send({ data: card })
     })
     .catch(err => {
       if (err.name === "CastError") {
@@ -50,7 +49,7 @@ const deleteCard = (req, res, next) => {
 const likeCard = (req, res, next) => {
   Card.findByIdAndUpdate(
     req.params.cardId,
-    { $addToSet: { likes: req.user._id } }, // добавить _id в массив, если его там нет
+    { $addToSet: { likes: req.user._id } }, 
     { new: true },
   ).orFail(new NotFoundError('Передан несуществующий cardId карточки.'))
     .then(card => {
@@ -70,7 +69,7 @@ const likeCard = (req, res, next) => {
 const dislikeCard = (req, res, next) => {
   Card.findByIdAndUpdate(
     req.params.cardId,
-    { $pull: { likes: req.user._id } },  // убрать _id из массива
+    { $pull: { likes: req.user._id } },  
     { new: true },
   )
     .orFail(new NotFoundError('Передан несуществующий cardId карточки.'))

@@ -3,6 +3,6 @@ const { createUser, login } = require('../controllers/users');
 const { EmailAndPasswordValidation, NameAndAboutValidation, AvatarValidation } = require('../middlewares/validation')
 
 router.post('/signin', EmailAndPasswordValidation, login);
-router.post('/signup', EmailAndPasswordValidation, NameAndAboutValidation, AvatarValidation, createUser);
+router.post('/signup', NameAndAboutValidation, AvatarValidation, EmailAndPasswordValidation, createUser);
 
 module.exports = router;
