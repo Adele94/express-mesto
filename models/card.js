@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const validator = require('validator');
 
 const cardSchema = new mongoose.Schema({
   "name": {
@@ -8,7 +9,13 @@ const cardSchema = new mongoose.Schema({
     maxlength: 30
   },
   "link": {
-    type: String,
+    type: String,    
+    validate: {
+      validator: function (v) {
+        return /https{0,1}:\/\/[a-z0-9._~:/?#\[\]@!$&'()*+,;=-]+#?/.test(v);
+      },
+      message: 'Не соответсвует формату ссылки',
+    },
     required: true
   },
   "owner": {
