@@ -19,7 +19,6 @@ class ForbiddenError extends Error {
   }
 }
 
-
 class NotFoundError extends Error {
   constructor(message) {
     super(message);
@@ -34,4 +33,6 @@ class ConflictError extends Error {
   }
 }
 
-module.exports = { BadRequestError, UnauthorizedError, NotFoundError, ForbiddenError, ConflictError };
+module.exports = {
+  BadRequestError, UnauthorizedError, NotFoundError, ForbiddenError, ConflictError,
+};

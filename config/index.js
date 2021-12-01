@@ -1,4 +1,4 @@
 const SALT_ROUNDS = 10;
-const JWT_TOKEN = "secret-key";
+const JWT_TOKEN = 'secret-key';
 
-module.exports = { SALT_ROUNDS, JWT_TOKEN }
+module.exports = { SALT_ROUNDS, JWT_TOKEN };

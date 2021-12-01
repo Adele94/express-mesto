@@ -17,11 +17,11 @@ const EmailAndPasswordValidation = celebrate({
 const NameAndAboutValidation = celebrate({
   [Segments.BODY]: Joi.object().keys({
     name: Joi.string().min(2).max(30),
-    about: Joi.string().min(2).max(30)
+    about: Joi.string().min(2).max(30),
   }).unknown(true),
 });
 
-const AvatarValidation =  celebrate({ 
+const AvatarValidation = celebrate({
   [Segments.BODY]: Joi.object().keys({
     avatar: Joi.string()
       .custom((value, helpers) => {
@@ -37,11 +37,11 @@ const UserIdValidation = celebrate({
   [Segments.PARAMS]: Joi.object().keys({
     userId: Joi.string().hex().required()
       .custom((value, helpers) => {
-        if (value.length == 24) {
+        if (value.length === 24) {
           return value;
         }
         return helpers.message('Не соответсвует формату id пользователя');
-      })
+      }),
   }).unknown(true),
 });
 
@@ -49,11 +49,11 @@ const CardIdValidation = celebrate({
   [Segments.PARAMS]: Joi.object().keys({
     cardId: Joi.string().hex().required()
       .custom((value, helpers) => {
-        if (value.length == 24) {
+        if (value.length === 24) {
           return value;
         }
         return helpers.message('Не соответсвует формату id карточки');
-      })
+      }),
   }).unknown(true),
 });
 
@@ -70,5 +70,7 @@ const CardValidation = celebrate({
   }).unknown(true),
 });
 
-
-module.exports = { EmailAndPasswordValidation, NameAndAboutValidation, AvatarValidation, UserIdValidation, CardIdValidation, CardValidation }
+module.exports = {
+  // eslint-disable-next-line max-len
+  EmailAndPasswordValidation, NameAndAboutValidation, AvatarValidation, UserIdValidation, CardIdValidation, CardValidation,
+};

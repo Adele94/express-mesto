@@ -1,35 +1,35 @@
-const mongoose = require("mongoose");
-const validator = require('validator');
+const mongoose = require('mongoose');
 
 const cardSchema = new mongoose.Schema({
-  "name": {
+  name: {
     type: String,
     required: true,
     minlength: 2,
-    maxlength: 30
+    maxlength: 30,
   },
-  "link": {
-    type: String,    
+  link: {
+    type: String,
     validate: {
-      validator: function (v) {
+      validator(v) {
+        // eslint-disable-next-line no-useless-escape
         return /https{0,1}:\/\/[a-z0-9._~:/?#\[\]@!$&'()*+,;=-]+#?/.test(v);
       },
       message: 'Не соответсвует формату ссылки',
     },
-    required: true
+    required: true,
   },
-  "owner": {
+  owner: {
     type: mongoose.Schema.Types.ObjectId,
-    required: true
+    required: true,
   },
-  "likes": {
+  likes: {
     type: [mongoose.Schema.Types.ObjectId],
     default: [],
   },
-  "createdAt": {
+  createdAt: {
     type: Date,
-    default: Date.now
-  }
-})
+    default: Date.now,
+  },
+});
 
 module.exports = mongoose.model('card', cardSchema);
