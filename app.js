@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 const express = require('express');
 const mongoose = require('mongoose');
-const { isCelebrateError } = require('celebrate');
+const { errors } = require('celebrate');
 const routesUser = require('./routes/users');
 const routesCard = require('./routes/cards');
 const routesAuth = require('./routes/auth');
@@ -25,28 +25,22 @@ app.use('*', () => { throw new NotFoundError('Ресурс не найден'); 
 
 const { PORT = 3000 } = process.env;
 
+// обработчики ошибок
+app.use(errors()); // обработчик ошибок celebrate
+
 // здесь централизованно обрабатываем все ошибки
 app.use((err, req, res, next) => {
-  if (isCelebrateError(err)) {
-    let errorObject = err.details.get('body'); // 'details' is a Map()
-    if (!errorObject) {
-      errorObject = err.details.get('params'); // 'details' is a Map()
-    }
-    const { details: [errorDetails] } = errorObject;
-    res.status(400).send({ message: errorDetails.message });
-  } else {
-    // если у ошибки нет статуса, выставляем 500
-    const { statusCode = 500, message } = err;
+  // если у ошибки нет статуса, выставляем 500
+  const { statusCode = 500, message } = err;
 
-    res
-      .status(statusCode)
-      .send({
-        // проверяем статус и выставляем сообщение в зависимости от него
-        message: statusCode === 500
-          ? 'На сервере произошла ошибка'
-          : message,
-      });
-  }
+  res
+    .status(statusCode)
+    .send({
+      // проверяем статус и выставляем сообщение в зависимости от него
+      message: statusCode === 500
+        ? 'На сервере произошла ошибка'
+        : message,
+    });
 });
 
 app.listen(PORT, () => {
